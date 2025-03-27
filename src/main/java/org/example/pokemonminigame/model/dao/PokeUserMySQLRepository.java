@@ -1,5 +1,6 @@
 package org.example.pokemonminigame.model.dao;
 
+import org.example.pokemonminigame.model.dto.PokeUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.logging.Logger;
@@ -11,4 +12,6 @@ public class PokeUserMySQLRepository extends MySQLRepository {
         super();
         logger.info("정상적으로 생성되었습니다");
     }
+
+    public void createPokeUser(PokeUser pokeUser) {}
 }

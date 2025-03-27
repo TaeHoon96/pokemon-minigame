@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 // DTO : Data Transfer Object
 // DAO : Data Access Object
 public interface JDBCRepository {
-    Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
     default void prepareClass(String className) throws Exception {
         Class.forName(className);
@@ -21,4 +20,6 @@ public interface JDBCRepository {
         // Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(url, properties);
     }
+
+
 }

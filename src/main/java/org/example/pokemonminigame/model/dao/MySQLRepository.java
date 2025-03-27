@@ -1,14 +1,17 @@
 package org.example.pokemonminigame.model.dao;
 
+import org.example.pokemonminigame.util.DotenvMixin;
+
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-abstract public class MySQLRepository implements JDBCRepository
+abstract public class MySQLRepository implements JDBCRepository, DotenvMixin
 {
     final Logger logger = Logger.getLogger(MySQLRepository.class.getName());
-    protected Connection connection;
+    protected final Connection connection;
+
     public MySQLRepository() throws Exception {
         logger.info("생성 시도");
         prepareClass("com.mysql.cj.jdbc.Driver");
