@@ -54,6 +54,10 @@ echo "🔹 Dockerfile 다운로드 완료"
 mkdir -p .github/workflows
 curl -s "$GA_WORKFLOW_URL" -o .github/workflows/gchr.yml && echo "🔹 GitHub Actions 설정 완료"
 
+# .env 설정
+touch src/main/resources/.env
+echo "🔹 .env 생성 완료"
+
 # git에 변경 사항 추가
 git add "$POM" Dockerfile .gitignore .github/workflows/gchr.yml
 echo "🔹 Git에 변경 사항 추가 완료"

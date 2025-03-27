@@ -36,51 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
-### dotenv ###
-.env
-
-### backup ###
-*.backup
-
-- dotenv 관련 추가
-### dotenv ###
-.env
-
-- backup 관련 추가
-### backup ###
-*.backup
-
-- dotenv 관련 추가
-### dotenv ###
-.env
-
-- backup 관련 추가
-### backup ###
-*.backup
-
-- dotenv 관련 추가
-### dotenv ###
-.env
-
-- backup 관련 추가
-### backup ###
-*.backup
-
-- dotenv 관련 추가
-### dotenv ###
-.env
-
-- backup 관련 추가
-### backup ###
-*.backup
-
-- dotenv 관련 추가
-### dotenv ###
-.env
-
-- backup 관련 추가
-### backup ###
-*.backup
 
 ### dotenv ###
 .env
