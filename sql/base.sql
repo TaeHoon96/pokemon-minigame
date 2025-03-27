@@ -6,6 +6,7 @@ CREATE TABLE poke_user (
 
 CREATE TABLE poke_image (
    poke_image_id varchar(255) primary key,
-   image mediumblob not null,
+   image varchar(5000) not null,
+   created_at timestamp default current_timestamp,
    poke_user_id VARCHAR(255) REFERENCES poke_user(poke_user_id)
 );

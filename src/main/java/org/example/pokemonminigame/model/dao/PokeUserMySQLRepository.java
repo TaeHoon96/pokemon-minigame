@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 import java.util.logging.Logger;
 
 @Repository
@@ -15,6 +14,24 @@ public class PokeUserMySQLRepository extends MySQLRepository {
     public PokeUserMySQLRepository() throws Exception {
         super();
         logger.info("정상적으로 생성되었습니다");
+    }
+
+    public String getUsernameByPokeUserId(String pokeUserID) {
+        try (Statement stmt = connection.createStatement()) {
+            String query = "SELECT * FROM poke_user WHERE poke_user_id = '%s'".formatted(pokeUserID);
+            try (ResultSet rs = stmt.executeQuery(query)) {
+                if (rs.next()) {
+                    return rs.getString("username");
+                } else {
+                    logger.info("없는 유저");
+                    throw new RuntimeException("없는 유저");
+                }
+            }
+
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public String getOnePokeUser(String username, String password) {
