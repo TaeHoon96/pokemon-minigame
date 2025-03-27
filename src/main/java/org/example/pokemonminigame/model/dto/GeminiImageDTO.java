@@ -1,4 +1,3 @@
 package org.example.pokemonminigame.model.dto;
 
-public record GeminiImageDTO() {
-}
+public record GeminiImageDTO(String image) { }

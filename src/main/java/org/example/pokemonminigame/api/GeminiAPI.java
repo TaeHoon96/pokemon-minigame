@@ -3,6 +3,7 @@ package org.example.pokemonminigame.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.pokemonminigame.model.dto.GeminiImageDTO;
 import org.example.pokemonminigame.model.dto.GeminiRequestDTO;
+import org.example.pokemonminigame.model.dto.GeminiResponseDTO;
 import org.example.pokemonminigame.util.DotenvMixin;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +42,10 @@ public class GeminiAPI implements DotenvMixin {
         HttpResponse<String> response = httpClient.send(
             request, HttpResponse.BodyHandlers.ofString()
         );
-        logger.info(response.body());
-        return new GeminiImageDTO();
+//        logger.info(response.body());
+        String data = objectMapper.readValue(response.body(), GeminiResponseDTO.class).candidates().get(0).content().parts().get(0).inlineData().data();
+//        logger.info(data);
+        logger.info(String.valueOf(data.length()));
+        return new GeminiImageDTO(data);
     }
 }

@@ -2,6 +2,7 @@ package org.example.pokemonminigame.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.pokemonminigame.api.GeminiAPI;
+import org.example.pokemonminigame.model.dao.PokeImageMySQLRepository;
 import org.example.pokemonminigame.model.dao.PokeUserMySQLRepository;
 import org.example.pokemonminigame.model.dto.GeminiRequestDTO;
 import org.example.pokemonminigame.model.dto.PokeUser;
@@ -23,10 +24,12 @@ public class IndexController {
     private final PokeUserMySQLRepository pokeUserMySQLRepository;
     private final Logger logger = Logger.getLogger(IndexController.class.getName());
     private final GeminiAPI geminiAPI;
+    private final PokeImageMySQLRepository pokeImageMySQLRepository;
 
-    public IndexController(PokeUserMySQLRepository pokeUserMySQLRepository, GeminiAPI geminiAPI) {
+    public IndexController(PokeUserMySQLRepository pokeUserMySQLRepository, GeminiAPI geminiAPI, PokeImageMySQLRepository pokeImageMySQLRepository) {
         this.pokeUserMySQLRepository = pokeUserMySQLRepository;
         this.geminiAPI = geminiAPI;
+        this.pokeImageMySQLRepository = pokeImageMySQLRepository;
     }
 
     @GetMapping("/")
@@ -51,12 +54,13 @@ public class IndexController {
 
     @PostMapping("/sign-up")
     public String signUp(@ModelAttribute PokeUserDTO pokeUserDTO) throws Exception {
-        pokeUserMySQLRepository.createPokeUser(new PokeUser(UUID.randomUUID(), pokeUserDTO.username(), pokeUserDTO.password()));
-        String prompt = "%s와 어울리는 포켓몬 이미지를 그려줘.".formatted(pokeUserDTO.username());
+        UUID userID = UUID.randomUUID();
+        pokeUserMySQLRepository.createPokeUser(new PokeUser(userID, pokeUserDTO.username(), pokeUserDTO.password()));
+        String prompt = "Draw a cute comic character that reflects the characteristics of {%s}, and if you can't create one, draw a cute image.".formatted(pokeUserDTO.username());
         List<GeminiRequestDTO.Content> contents = List.of(new GeminiRequestDTO.Content("user", List.of(new GeminiRequestDTO.Part(prompt))));
-        GeminiRequestDTO.GenerationConfig generationConfig = new GeminiRequestDTO.GenerationConfig(List.of("image", "text"));
+        GeminiRequestDTO.GenerationConfig generationConfig = new GeminiRequestDTO.GenerationConfig(List.of("Text", "Image"));
         GeminiRequestDTO geminiRequestDTO = new GeminiRequestDTO(contents, generationConfig);
-        geminiAPI.generateImage(geminiRequestDTO);
+        pokeImageMySQLRepository.createPokeImage(geminiAPI.generateImage(geminiRequestDTO).image(), userID.toString());
         return "redirect:/";
     }
 
