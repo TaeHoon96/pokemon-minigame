@@ -22,6 +22,7 @@ abstract public class MySQLRepository implements JDBCRepository, DotenvMixin
         properties.put("database", dotenv.get("MYSQL_DATABASE"));
         properties.put("host", dotenv.get("MYSQL_HOST"));
         properties.put("port", dotenv.get("MYSQL_PORT"));
+        properties.put("databaseName", dotenv.get("MYSQL_DATABASE"));
         connection = getConnection(url, properties);
         testConnection();
         logger.info("정상적으로 생성");

@@ -18,6 +18,9 @@ public interface JDBCRepository {
 
     default Connection getConnection(String url, Properties properties) throws Exception {
         // Class.forName("com.mysql.cj.jdbc.Driver");
+        url = "%s%s:%s/%s"
+        .formatted(url, properties.getProperty("host"), properties.getProperty("port"), properties.getProperty("database"));
+        // database 인식 못해... 으엉...
         return DriverManager.getConnection(url, properties);
     }
 
